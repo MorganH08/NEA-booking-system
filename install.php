@@ -4,11 +4,12 @@ $username="root";
 $password="password";
 $conn= new PDO("mysql:host=$servername",$username,$password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$sql="CREATE DATABASE IF NOT EXISTS NEA-booking-system";
+$sql="CREATE DATABASE IF NOT EXISTS nea_booking_system";
 $conn->exec($sql);
-$sql="USE NEA-booking-system";
+$sql="USE nea_booking_system";
 $conn->exec($sql);
 echo("DB created successfully<br>");
+
 // create users table
 $stmt=$conn->prepare("DROP TABLE IF EXISTS tblusers;
 CREATE TABLE tblusers
@@ -16,27 +17,28 @@ CREATE TABLE tblusers
 EmailAddress VARCHAR(100) NOT NULL,
 Surname  VARCHAR(20) NOT NULL,
 Forename  VARCHAR(20) NOT NULL,
-Password  VARCHAR(MAX) NOT NULL,
-Technician BOOLEAN 
+Password  VARCHAR(20) NOT NULL,
+Technician BOOLEAN
 );
 "); // technician = 1, teacher = 0
 
 $stmt->execute();
 echo("tblusers created<br>");
 //add in test bed of users
-;
+
 $hashedpassword=password_hash("password",PASSWORD_DEFAULT);
-//echo($hashedpassword);
+echo($hashedpassword);
 
 $stmt=$conn->prepare("INSERT INTO tblusers 
-(UserID,Username,Surname,Forename,Password,Year,Balance,Role)
+(UserID,EmailAddress,Surname,Forename,Password,Technician)
 VALUES
-(NULL,'cunniffe.r','Cunniffe','Robert',:Password,13,10.00,1),
-(NULL,'smith.b','Smith','Bob',:Password,12,100,0),
-(NULL,'smith.d','Smith','Dave',:Password,12,100,0)
+(NULL,'cunniffe.r@mail.com','Cunniffe','Robert',:Password,1),
+(NULL,'smith.b@mail.com','Smith','Bob',:Password,0),
+(NULL,'smith.j@mail.com','Jones','Dave',:Password,0)
 ");
 
 $stmt->bindParam(":Password", $hashedpassword);
+echo("<br>Users added<br>");
 
 $stmt->execute();
 
@@ -51,18 +53,20 @@ Location VARCHAR(4) NOT NULL,
 Units VARCHAR(10) NOT NULL,
 );
 ");
-$stmt->execute();
-echo("tblstock created<br>");
 
-$stmt=$conn->prepare("INSERT INTO tblstock
-    (ItemID, Name, Quantity, Price, Category, Location, RA, Units)
-    VALUES
-    (NULL,'0123','Microscope',15,200.00,'Digital','SP7','RA placeholder','Units' ),
-    (NULL,'0145','Hydrochloric acid',2000,150.00,'Chemicals','SP7,'RA placeholder','mL')
-    ");
-    
-    
 $stmt->execute();
+
+echo("<br>tblstock created<br>");
+
+// $stmt=$conn->prepare("INSERT INTO tblstock
+//     (ItemID, Name, Quantity, Price, Category, Location, Units)
+//     VALUES
+//     (NULL,'0123','Microscope',15,200.00,'Digital','SP7','RA placeholder','Units' ),
+//     (NULL,'0145','Hydrochloric acid',2000,150.00,'Chemicals','SP7,'RA placeholder','mL')
+//     ");
+    
+    
+// $stmt->execute();
 
 // $stmt=$conn->prepare("DROP TABLE IF EXISTS tblrequests;
 // CREATE TABLE tblrequests

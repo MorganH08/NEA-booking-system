@@ -13,7 +13,3 @@ catch(PDOException $e){
     echo("Connection failed: " . $e->getMessage()); #error message if connection doesnt work
 }
 ?>
-
-
-
-
