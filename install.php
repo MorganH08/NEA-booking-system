@@ -55,7 +55,6 @@ Units VARCHAR(10) NOT NULL,
 ");
 
 $stmt->execute();
-
 echo("<br>tblstock created<br>");
 
 // $stmt=$conn->prepare("INSERT INTO tblstock
@@ -65,8 +64,9 @@ echo("<br>tblstock created<br>");
 //     (NULL,'0145','Hydrochloric acid',2000,150.00,'Chemicals','SP7,'RA placeholder','mL')
 //     ");
     
-    
+// echo("Stock items added") 
 // $stmt->execute();
+
 
 // $stmt=$conn->prepare("DROP TABLE IF EXISTS tblrequests;
 // CREATE TABLE tblrequests
