@@ -18,7 +18,7 @@ EmailAddress VARCHAR(100) NOT NULL,
 Surname  VARCHAR(20) NOT NULL,
 Forename  VARCHAR(20) NOT NULL,
 Password  VARCHAR(20) NOT NULL,
-Technician BOOLEAN
+Technician BOOLEAN NOT NULL
 );
 "); // technician = 1, teacher = 0
 
@@ -50,12 +50,13 @@ Quantity DECIMAL(7,3) NOT NULL,
 Price DECIMAL(6,2) NOT NULL,
 Category VARCHAR(20) NOT NULL,
 Location VARCHAR(4) NOT NULL,
-Units VARCHAR(10) NOT NULL,
+Units VARCHAR(10) NOT NULL
 );
 ");
 
 $stmt->execute();
-echo("<br>tblstock created<br>");
+echo("tblstock created<br>");
+//adds in table to keep track of stock
 
 // $stmt=$conn->prepare("INSERT INTO tblstock
 //     (ItemID, Name, Quantity, Price, Category, Location, Units)
