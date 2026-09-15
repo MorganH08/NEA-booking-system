@@ -33,4 +33,4 @@ catch(PDOException $e)
 }
 
 ?>
-<a href="index.php">back to main page</a><br
+<a href="index.php">back to main page</a><br>
