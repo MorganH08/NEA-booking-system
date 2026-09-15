@@ -9,6 +9,7 @@ if($_POST["role"]=="technician"){
     $role=0;
 }
 //$role=1;
+//test
 $userID=$_POST[]
 //echo($username);
 //$username="bob";
