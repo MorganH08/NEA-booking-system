@@ -17,30 +17,30 @@ CREATE TABLE tblusers
 EmailAddress VARCHAR(100) NOT NULL,
 Surname  VARCHAR(20) NOT NULL,
 Forename  VARCHAR(20) NOT NULL,
-Password  VARCHAR(20) NOT NULL,
+Password  VARCHAR(255) NOT NULL,
 Technician BOOLEAN NOT NULL
 );
 "); // technician = 1, teacher = 0
 
-$stmt->execute();
 echo("tblusers created<br>");
 //add in test bed of users
 
 $hashedpassword=password_hash("password",PASSWORD_DEFAULT);
 echo($hashedpassword);
+echo("<br>");
 
-$stmt=$conn->prepare("INSERT INTO tblusers 
+$stmt=$conn->prepare("INSERT INTO tblusers
 (UserID,EmailAddress,Surname,Forename,Password,Technician)
 VALUES
 (NULL,'cunniffe.r@mail.com','Cunniffe','Robert',:Password,1),
 (NULL,'smith.b@mail.com','Smith','Bob',:Password,0),
-(NULL,'smith.j@mail.com','Jones','Dave',:Password,0)
+(NULL,'jones.d@mail.com','Jones','Dave',:Password,0)
 ");
 
-$stmt->bindParam(":Password", $hashedpassword);
-echo("<br>Users added<br>");
-
-$stmt->execute();
+$stmt->bindParam(":Password1", $hashedpassword);
+$stmt->bindParam(":Password2", $hashedpassword);
+$stmt->bindParam(":Password3", $hashedpassword);
+echo("users added<br>");
 
 $stmt=$conn->prepare("DROP TABLE IF EXISTS tblstock;
 CREATE TABLE tblstock
@@ -54,43 +54,40 @@ Units VARCHAR(10) NOT NULL
 );
 ");
 
-$stmt->execute();
 echo("tblstock created<br>");
-//adds in table to keep track of stock
+// adds in table to keep track of stock
 
-// $stmt=$conn->prepare("INSERT INTO tblstock
-//     (ItemID, Name, Quantity, Price, Category, Location, Units)
-//     VALUES
-//     (NULL,'0123','Microscope',15,200.00,'Digital','SP7','RA placeholder','Units' ),
-//     (NULL,'0145','Hydrochloric acid',2000,150.00,'Chemicals','SP7,'RA placeholder','mL')
-//     ");
+$stmt=$conn->prepare("INSERT INTO tblstock
+    (ItemID, Name, Quantity, Price, Category, Location, Units)
+    VALUES
+    (NULL,'Microscope',15,200.00,'Digital','SP7','Units'),
+    (NULL,'Hydrochloric acid',2000,150.00,'Chemicals','SP7,'mL')
+    ");
     
-// echo("Stock items added") 
-// $stmt->execute();
+echo("stock added<br>");
 
 
-// $stmt=$conn->prepare("DROP TABLE IF EXISTS tblrequests;
-// CREATE TABLE tblrequests
-// (RequestID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-// UserID INT(4) NOT  NULL,
-// RequestDate  DATETIME NOT NULL,
-// DeliveryDate DATE NOT NULL,
-// ExtraNotes TEXT(1000),
-// Technician TEXT(50) NOT NULL,
+$stmt=$conn->prepare("DROP TABLE IF EXISTS tblrequests;
+CREATE TABLE tblrequests
+(RequestID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+UserID INT(4) NOT  NULL,
+RequestDate  DATETIME NOT NULL,
+DeliveryDate DATE NOT NULL,
+ExtraNotes TEXT(1000),
+Technician TEXT(50) NOT NULL,
+);
+");
 
-// );
-// ");
-// $stmt->execute();
-// echo("order table made");
+echo("tblrequests created<br>");
 
-// $stmt=$conn->prepare("DROP TABLE IF EXISTS tblbasket;
-// CREATE TABLE tblbasket
-// (OrderID INT(4) NOT NULL,
-// Quantity  INT(2) DEFAULT 1,
-// FoodID INT(4) NOT NULL,
-// PRIMARY KEY (OrderID, FoodID)
-// );
-// ");
-// $stmt->execute();
-// echo("basket table made");
-// ?>
+$stmt=$conn->prepare("DROP TABLE IF EXISTS tblbasket;
+CREATE TABLE tblbasket
+(OrderID INT(4) NOT NULL,
+Quantity  INT(2) DEFAULT 1,
+FoodID INT(4) NOT NULL,
+PRIMARY KEY (OrderID, FoodID)
+);
+");
+$stmt->execute();
+echo("tblbasket created<br>");
+?>
