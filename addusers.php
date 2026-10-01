@@ -1,5 +1,4 @@
 <?php
-header("location: users.php");
 //print_r($_POST);
 include_once("connection.php");//import equivalent!
 if($_POST["role"]=="technician"){
@@ -9,7 +8,6 @@ if($_POST["role"]=="technician"){
     $role=0;
 }
 //$role=1;
-//test
 $userID=$_POST[]
 //echo($username);
 //$username="bob";
@@ -19,14 +17,15 @@ try{
     $stmt=$conn->prepare("INSERT INTO tblusers 
     (UserID,EmailAddress,Surname,Forename,Password,Technician)
     VALUES
-    (NULL,:UserID,:EmailAddress,:Surname,:Forename,:Password)
+    (NULL,:EmailAddress,:Surname,:Forename,:Password,:Technician)
     ");
     $stmt->bindParam(":Surname", $_POST["surname"]);
     $stmt->bindParam(":Forename", $_POST["forename"]);
     $stmt->bindParam(":Password", $hashedpassword);
     $stmt->bindParam(":EmailAddress", $_POST["emailaddress"]);
-    $stmt->bindParam(":Role", $role);
+    $stmt->bindParam(":Technician", $role);
     $stmt->execute();
+    header("location: users.php");
 }
 catch(PDOException $e)
 {
