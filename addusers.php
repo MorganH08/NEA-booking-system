@@ -8,7 +8,7 @@ if($_POST["role"]=="technician"){
     $role=0;
 }
 //$role=1;
-$userID=$_POST[]
+$userID=$_POST["password"];
 //echo($username);
 //$username="bob";
 $hashedpassword=password_hash($_POST["password"],PASSWORD_DEFAULT);
@@ -34,3 +34,4 @@ catch(PDOException $e)
 
 ?>
 <a href="index.php">back to main page</a><br>
+
