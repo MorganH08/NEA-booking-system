@@ -1,5 +1,5 @@
 <?php
-//print_r($_POST);
+// print_r($_POST);
 include_once("connection.php");//import equivalent!
 if($_POST["role"]=="technician"){
     $role=1;
@@ -8,11 +8,11 @@ if($_POST["role"]=="technician"){
     $role=0;
 }
 //$role=1;
-$userID=$_POST["password"];
+// $userID=$_POST["password"];
 //echo($username);
 //$username="bob";
 $hashedpassword=password_hash($_POST["password"],PASSWORD_DEFAULT);
-echo($hashedpassword);
+// echo($hashedpassword);
 try{
     $stmt=$conn->prepare("INSERT INTO tblusers 
     (UserID,EmailAddress,Surname,Forename,Password,Technician)
@@ -27,6 +27,7 @@ try{
     $stmt->execute();
     header("location: users.php");
 }
+// echo($hashedpassword);
 catch(PDOException $e)
 {
     echo("error: " . $e->getMessage());

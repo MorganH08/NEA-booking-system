@@ -11,8 +11,9 @@ $conn->exec($sql);
 echo("DB created successfully<br>");
 
 // create users table
-$stmt=$conn->prepare("DROP TABLE IF EXISTS tblusers;
-CREATE TABLE tblusers
+$stmt=$conn->prepare("DROP TABLE IF EXISTS tblusers;");
+
+$stmt=$conn->prepare("CREATE TABLE tblusers
 (UserID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 EmailAddress VARCHAR(100) NOT NULL,
 Surname  VARCHAR(20) NOT NULL,
@@ -21,7 +22,7 @@ Password  VARCHAR(255) NOT NULL,
 Technician BOOLEAN NOT NULL
 );
 "); // technician = 1, teacher = 0
-
+$stmt->execute();
 echo("tblusers created<br>");
 //add in test bed of users
 
@@ -61,7 +62,7 @@ $stmt=$conn->prepare("INSERT INTO tblstock
     (ItemID, Name, Quantity, Price, Category, Location, Units)
     VALUES
     (NULL,'Microscope',15,200.00,'Digital','SP7','Units'),
-    (NULL,'Hydrochloric acid',2000,150.00,'Chemicals','SP7,'mL')
+    (NULL,'Hydrochloric acid',2000,150.00,'Chemicals','SP7','mL')
     ");
     
 echo("stock added<br>");
@@ -74,7 +75,7 @@ UserID INT(4) NOT  NULL,
 RequestDate  DATETIME NOT NULL,
 DeliveryDate DATE NOT NULL,
 ExtraNotes TEXT(1000),
-Technician TEXT(50) NOT NULL,
+Technician TEXT(50) NOT NULL
 );
 ");
 
